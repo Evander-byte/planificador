@@ -16,14 +16,16 @@ import {
   View,
 } from 'react-native';
 import Header from './src/components/Header';
-import NuevoPresupuesto from './src/components/NuevoPresupuesto';
+import NuevoPresupuesto from './src/components/NewBudget';
+import BudgetControl from './src/components/BudgetControl';
 
 
 
 
 function App() {
   const [isValidBudget, setIsValidBudget] = useState(false)
-  
+  const [budget, setBudget] = useState(0)
+
   const handleBudget = (budget) => {
     if(Number(budget) > 0){
       setIsValidBudget(true)
@@ -36,9 +38,16 @@ function App() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Header />
-        <NuevoPresupuesto 
-          handleBudget={handleBudget}
-        />
+        {isValidBudget 
+          ? (<BudgetControl 
+              budget={budget}
+            />)
+          : (<NuevoPresupuesto 
+              handleBudget={handleBudget}
+              budget={budget}
+              setBudget={setBudget}
+            />)
+        }
       </View>
     </View>
   );

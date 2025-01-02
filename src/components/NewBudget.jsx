@@ -1,11 +1,13 @@
-import {useState} from 'react'
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import globalStyles, { container } from '../styles'
 
 const NuevoPresupuesto = ({
-    handleBudget
+    handleBudget,
+    budget,
+    setBudget
 }) => {
 
-  const [budget, setBudget] = useState(0)
+  
   return (
     <View style={styles.container}>
         <Text style={styles.title}>Define your budget</Text>
@@ -27,22 +29,8 @@ const NuevoPresupuesto = ({
 }
 
 const styles = StyleSheet.create({
-    container:{
-        backgroundColor:'#FFF',
-        marginHorizontal: 10,
-        borderRadius: 10,
-        paddingVertical: 40,
-        paddingHorizontal: 20,
-        transform: [{translateY: 50}],
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        elevation: 5
+    container: {
+        ...globalStyles.container
     },
     title: {
         textAlign: 'center',
