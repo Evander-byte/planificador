@@ -5,44 +5,53 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
 } from 'react-native';
+import Header from './src/components/Header';
+import NuevoPresupuesto from './src/components/NuevoPresupuesto';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
 
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const [isValidBudget, setIsValidBudget] = useState(false)
+  
+  const handleBudget = (budget) => {
+    if(Number(budget) > 0){
+      setIsValidBudget(true)
+    } else {  
+      Alert.alert('Error', 'Budget cannot be 0 or less', 'Ok')
+    }
+  }
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <Text>Hola</Text>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Header />
+        <NuevoPresupuesto 
+          handleBudget={handleBudget}
+        />
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-
+  container: {
+    backgroundColor:'#F5F5F5',
+    flex: 1
+  },
+  header: {
+    backgroundColor: '#3B82F6'
+  }
 });
 
 export default App;
