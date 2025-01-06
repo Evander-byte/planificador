@@ -1,10 +1,10 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import globalStyles, { container } from '../styles'
 
-const NuevoPresupuesto = ({
+const NewBudget = ({
     handleBudget,
     budget,
-    setBudget
+    setBudget,
 }) => {
 
   
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default NuevoPresupuesto
+export default NewBudget

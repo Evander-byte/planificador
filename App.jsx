@@ -5,19 +5,23 @@
  * @format
  */
 
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 import {
   Alert,
+  Image,
+  Modal,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View,
-} from 'react-native';
-import Header from './src/components/Header';
-import NuevoPresupuesto from './src/components/NewBudget';
-import BudgetControl from './src/components/BudgetControl';
+} from 'react-native'
+import Header from './src/components/Header'
+import BudgetControl from './src/components/BudgetControl'
+import NewBudget from './src/components/NewBudget'
+import SpentForm from './src/components/SpentForm'
 
 
 
@@ -25,6 +29,8 @@ import BudgetControl from './src/components/BudgetControl';
 function App() {
   const [isValidBudget, setIsValidBudget] = useState(false)
   const [budget, setBudget] = useState(0)
+  const [spents, setSpents] = useState([])
+  const [modal, setModal] = useState(false)
 
   const handleBudget = (budget) => {
     if(Number(budget) > 0){
@@ -41,14 +47,36 @@ function App() {
         {isValidBudget 
           ? (<BudgetControl 
               budget={budget}
+              spents={spents}
             />)
-          : (<NuevoPresupuesto 
+          : (<NewBudget 
               handleBudget={handleBudget}
               budget={budget}
               setBudget={setBudget}
             />)
         }
       </View>
+      {modal && (
+        <Modal
+          visible={modal}
+          animationType='slide'
+        >
+          <SpentForm
+            setModal={setModal}
+          />  
+        </Modal>
+      )}
+      {isValidBudget && (
+        <Pressable 
+          style={styles.btnContainer}
+          onLongPress={() => setModal(true)}
+        >
+          <Image
+            source={require('./src/img/nuevo-gasto.png')}
+            style={styles.btnSpend}
+          />
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -60,6 +88,24 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#3B82F6'
+  },
+  btnContainer: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    
+    elevation: 5,    
+  },
+  btnSpend:{
+    position: 'absolute',
+    right: 20,
+    top: 160,
+    width: 60,
+    height: 60
   }
 });
 

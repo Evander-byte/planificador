@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import globalStyles from '../styles'
-import { formatAmount } from '../helpers';
+import { formatAmount } from '../helpers'
 
 const BudgetControl = ({
-    budget
+    budget,
+    spents
 }) => {
-    console.log(budget);
+    const [avaible, setAvaible] = useState(0)
+    const [spent, setSpent] = useState(0)
+
+    useEffect(() => {
+        const totalSpent = spents.reduce((total, spent) => Number(spent.amount) + total, 0)
+        const totalAvaible = budget - spent
+        setSpent(totalSpent) 
+        setAvaible(totalAvaible)
+    },[])
   return (
     <View style={styles.container}>
         <View style={styles.centerChart}>
@@ -15,14 +24,21 @@ const BudgetControl = ({
                 source={require('../img/grafico.jpg')}
             />
         </View>
-        <View>
-            <Text>Budget: {formatAmount(budget)}</Text>
-        </View>
-        <View>
-            <Text>Avaible to spend: {formatAmount(budget)}</Text>
-        </View>
-        <View>
-            <Text>Spent: {formatAmount(budget)}</Text>
+        <View style={styles.textContainer}>
+            <Text style={styles.amount}>
+                <Text style={styles.label}>Budget:{''}</Text>
+                {formatAmount(budget)}
+                </Text>
+        
+            <Text style={styles.amount}>
+                <Text style={styles.label}>Avaible to spend:{''}</Text>
+                {formatAmount(avaible)}
+            </Text>
+        
+            <Text style={styles.amount}>
+                <Text style={styles.label}>Spent:{''}</Text>
+                {formatAmount(spent)}
+            </Text>
         </View>
     </View>
   )
@@ -38,6 +54,18 @@ const styles = StyleSheet.create({
     img: {
         width: 250,
         height: 250
+    },
+    textContainer: {
+        marginTop: 50
+    },
+    amount: {
+        fontSize: 24,
+        textAlign: 'center',
+        marginBottom: 10
+    },
+    label: {
+        fontWeight: '700',
+        color: '#3B82F6'
     }
 })
 
