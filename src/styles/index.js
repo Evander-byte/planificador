@@ -3,7 +3,7 @@ const globalStyles = {
         backgroundColor:'#FFF',
         marginHorizontal: 10,
         borderRadius: 10,
-        paddingVertical: 40,
+        paddingVertical: 30,
         paddingHorizontal: 20,
         transform: [{translateY: 50}],
         shadowColor: "#000",

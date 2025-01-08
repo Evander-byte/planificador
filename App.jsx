@@ -22,6 +22,8 @@ import Header from './src/components/Header'
 import BudgetControl from './src/components/BudgetControl'
 import NewBudget from './src/components/NewBudget'
 import SpentForm from './src/components/SpentForm'
+import { idGenrator } from './src/helpers'
+import ListExpenses from './src/components/ListExpenses'
 
 
 
@@ -40,6 +42,21 @@ function App() {
     }
   }
 
+  const handleExpense = expense => {
+    if(Object.values(expense).includes('')){
+      Alert.alert(
+        "Error",
+        "All fields are necessary"
+      )
+      return
+    }
+
+    expense.id = idGenrator()
+    setSpents([...spents, expense])
+    setModal(!modal)
+    
+  }
+ 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -56,13 +73,23 @@ function App() {
             />)
         }
       </View>
+
+      {isValidBudget && (
+        <ScrollView>
+          <ListExpenses/>
+        </ScrollView>
+      )}
       {modal && (
         <Modal
           visible={modal}
           animationType='slide'
+          onRequestClose={() => {
+            setModal(!modal)
+          }}
         >
           <SpentForm
             setModal={setModal}
+            handleExpense={handleExpense}
           />  
         </Modal>
       )}
