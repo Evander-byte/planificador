@@ -59,26 +59,30 @@ function App() {
  
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Header />
-        {isValidBudget 
-          ? (<BudgetControl 
+      <ScrollView>
+        <View style={styles.header}>
+          <Header />
+          {isValidBudget 
+            ? (<BudgetControl 
               budget={budget}
               spents={spents}
-            />)
-          : (<NewBudget 
-              handleBudget={handleBudget}
-              budget={budget}
-              setBudget={setBudget}
-            />)
-        }
-      </View>
+              />)
+              : (<NewBudget 
+                handleBudget={handleBudget}
+                budget={budget}
+                setBudget={setBudget}
+                />)
+              }
+        </View>
 
-      {isValidBudget && (
-        <ScrollView>
-          <ListExpenses/>
-        </ScrollView>
-      )}
+        {isValidBudget && (
+          <ListExpenses
+          spents={spents}
+          />
+        )}
+      </ScrollView>
+
+
       {modal && (
         <Modal
           visible={modal}
@@ -129,8 +133,8 @@ const styles = StyleSheet.create({
   },
   btnSpend:{
     position: 'absolute',
-    right: 20,
-    top: 160,
+    right: 30,
+    bottom: 40,
     width: 60,
     height: 60
   }
