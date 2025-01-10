@@ -12,10 +12,10 @@ const BudgetControl = ({
 
     useEffect(() => {
         const totalSpent = spents.reduce((total, spent) => Number(spent.amount) + total, 0)
-        const totalAvaible = budget - spent
+        const totalAvaible = budget - totalSpent
         setSpent(totalSpent) 
         setAvaible(totalAvaible)
-    },[])
+    },[spents])
   return (
     <View style={styles.container}>
         <View style={styles.centerChart}>

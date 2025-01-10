@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import globalStyles from '../styles'
-import { formatAmount } from '../helpers'
+import { formatAmount, formatDate } from '../helpers'
 
 const imgDictionary = {
   save: require('../img/icono_ahorro.png'),
@@ -13,25 +13,39 @@ const imgDictionary = {
   subscription: require('../img/icono_suscripciones.png'),
 }
 
-const Expense = ({spent}) => {
+const Expense = ({
+    spent,
+    setModal,
+    setExpense
+}) => {
 
-  const {name, category, amount, id} = spent
+  const {name, category, amount, date} = spent
+
+  const handleActions = () => {
+      setModal(true)
+      setExpense(spent)
+  }
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.imgContainer}>
-          <Image 
-            style={styles.img}
-            source={imgDictionary[category]}
-          />
-          <View style={styles.textContainer}>
-            <Text style={styles.category}>{category}</Text>
-            <Text style={styles.name}>{name}</Text>
+    <Pressable
+      onLongPress={handleActions}
+    >
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <View style={styles.imgContainer}>
+            <Image 
+              style={styles.img}
+              source={imgDictionary[category]}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.category}>{category}</Text>
+              <Text style={styles.name}>{name}</Text>
+              <Text style={styles.date}>{formatDate(date)}</Text>
+            </View>
           </View>
+          <Text style={styles.amount}>{formatAmount(amount)}</Text>
         </View>
-        <Text style={styles.amount}>{formatAmount(amount)}</Text>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
@@ -72,6 +86,9 @@ const styles = StyleSheet.create({
     amount: {
       fontSize: 20,
       fontWeight: '700'
+    },
+    date: {
+        fontWeight: 'light'
     }
 })
 

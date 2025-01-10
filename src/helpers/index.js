@@ -11,3 +11,14 @@ export const idGenrator = () => {
 
     return date+rndm
 }
+
+export const formatDate = (date) => {
+    const newDate = new Date(date)
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit'
+    }
+
+    return newDate.toLocaleDateString('en-EN', options)
+}

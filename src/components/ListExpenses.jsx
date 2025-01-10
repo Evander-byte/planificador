@@ -2,8 +2,11 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Expense from './Expense'
 
-const ListExpenses = ({spents}) => {
-    console.log(spents)
+const ListExpenses = ({
+    spents,
+    setModal,
+    setExpense
+}) => {
   return (
     <View style={styles.container}>
         <Text style={styles.title}>List of expenses</Text>
@@ -13,6 +16,8 @@ const ListExpenses = ({spents}) => {
                 <Expense
                     key={spent.id} 
                     spent={spent}
+                    setModal={setModal}
+                    setExpense={setExpense}
                 />
             ))
         }

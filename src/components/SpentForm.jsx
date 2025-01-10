@@ -1,11 +1,13 @@
 import { Picker } from '@react-native-picker/picker'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Pressable, View, Text, SafeAreaView, StyleSheet, TextInput } from 'react-native'
 import globalStyles from '../styles'
 
 const SpentForm = ({
     setModal,
-    handleExpense
+    handleExpense,
+    expense: currentExpense,
+    setExpense: setCurrentExpense
 }) => {
 
     const [expense, setExpense] = useState({
@@ -13,11 +15,23 @@ const SpentForm = ({
         amount: '',
         category: ''
     })
+
+    useEffect(() => {
+        if(currentExpense?.nombre){
+
+        }
+        setExpense(currentExpense)
+    }, [currentExpense])
+
+
   return (
     <SafeAreaView style={styles.container}>
         <View>
             <Pressable
-                onLongPress={() => setModal(false)}
+                onLongPress={() => {
+                    setModal(false)
+                    setCurrentExpense({})
+                }}
                 style={styles.btnCancel}
             >
                 <Text 
@@ -26,7 +40,13 @@ const SpentForm = ({
             </Pressable>
         </View>
         <View style={styles.form}>
-            <Text style={styles.title}>New Spent</Text>
+            <Text style={styles.title}>
+                {
+                    currentExpense?.name 
+                    ? 'Edit Spent' 
+                    : 'New Spent'
+                }
+            </Text>
             <View style={styles.field}>
                 <Text style={styles.label}>Expense name</Text>
                 <TextInput
@@ -78,7 +98,13 @@ const SpentForm = ({
                 }}
             
             >
-                <Text style={styles.btnAddText}>Add expense</Text>
+                <Text style={styles.btnAddText}>
+                    {
+                        currentExpense?.name 
+                        ? 'Save changes' 
+                        : 'Add expense'
+                    }
+                </Text>
             </Pressable>
         </View>
     </SafeAreaView>

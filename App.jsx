@@ -33,6 +33,7 @@ function App() {
   const [budget, setBudget] = useState(0)
   const [spents, setSpents] = useState([])
   const [modal, setModal] = useState(false)
+  const [expense, setExpense] = useState({})
 
   const handleBudget = (budget) => {
     if(Number(budget) > 0){
@@ -51,8 +52,15 @@ function App() {
       return
     }
 
-    expense.id = idGenrator()
-    setSpents([...spents, expense])
+    if(expense.id){
+      const updateExpenses = spents.map( expenseState => expenseState.id === expense.id ? expense : expenseState)
+      setSpents(updateExpenses)
+    } else {
+      expense.id = idGenrator()
+      expense.date = Date.now()
+      setSpents([...spents, expense])
+    }
+
     setModal(!modal)
     
   }
@@ -78,6 +86,8 @@ function App() {
         {isValidBudget && (
           <ListExpenses
           spents={spents}
+          setModal={setModal}
+          setExpense={setExpense}
           />
         )}
       </ScrollView>
@@ -94,6 +104,8 @@ function App() {
           <SpentForm
             setModal={setModal}
             handleExpense={handleExpense}
+            expense={expense}
+            setExpense={setExpense}
           />  
         </Modal>
       )}
