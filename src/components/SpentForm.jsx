@@ -7,7 +7,8 @@ const SpentForm = ({
     setModal,
     handleExpense,
     expense: currentExpense,
-    setExpense: setCurrentExpense
+    setExpense: setCurrentExpense,
+    deleteExpense
 }) => {
 
     const [expense, setExpense] = useState({
@@ -26,18 +27,35 @@ const SpentForm = ({
 
   return (
     <SafeAreaView style={styles.container}>
-        <View>
+        <View style={styles.containerBtn}>
             <Pressable
                 onLongPress={() => {
                     setModal(false)
                     setCurrentExpense({})
                 }}
-                style={styles.btnCancel}
+                style={[styles.btn, styles.btnCancel]}
             >
                 <Text 
-                    style={styles.btnCancelText}
+                    style={styles.btnText}
                 >Cancel</Text>
             </Pressable>
+            {currentExpense.id 
+                ? (
+                    <Pressable
+                        onLongPress={() => {
+                            deleteExpense(currentExpense.id)
+                        }}
+                        style={[styles.btn, styles.btnDelete]}
+                    >
+                        <Text 
+                            style={styles.btnText}
+                        >Delete</Text>
+                    </Pressable>
+                )
+                : (
+                    ''
+                )
+            }
         </View>
         <View style={styles.form}>
             <Text style={styles.title}>
@@ -116,13 +134,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#1E40AF',
         flex: 1
     },
+    containerBtn: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    btn: {
+        marginHorizontal: 10,
+        padding: 15,
+        borderRadius: 30,
+        flex: 1
+    },
     btnCancel: {
         backgroundColor: '#3B82F6',
-        marginHorizontal: 90,
-        padding: 15,
-        borderRadius: 30
     },
-    btnCancelText: {
+    btnDelete: {
+        backgroundColor: 'red'
+    },
+    btnText: {
         color: '#FFF',
         textAlign: 'center',
         fontWeight: 700,

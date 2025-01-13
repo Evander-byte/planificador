@@ -64,6 +64,22 @@ function App() {
     setModal(!modal)
     
   }
+
+  const deleteExpense = (id) => {
+    Alert.alert(
+      "Are you sure to eliminate this expense?",
+      "(An expense eliminated cannot be recovered)",
+      [
+        {text: 'No', style: 'cancel'},
+        {text: 'Yes, delete', onPress: () => {
+          const updatedExpense = spents.filter( expenseState => expenseState.id !== id)
+          setSpents(updatedExpense)
+          setModal(!modal)
+          setExpense({})
+        }}
+      ]
+    )
+  }
  
   return (
     <View style={styles.container}>
@@ -106,6 +122,7 @@ function App() {
             handleExpense={handleExpense}
             expense={expense}
             setExpense={setExpense}
+            deleteExpense={deleteExpense}
           />  
         </Modal>
       )}
