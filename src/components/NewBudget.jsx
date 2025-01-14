@@ -7,7 +7,6 @@ const NewBudget = ({
     setBudget,
 }) => {
 
-  
   return (
     <View style={styles.container}>
         <Text style={styles.title}>Define your budget</Text>

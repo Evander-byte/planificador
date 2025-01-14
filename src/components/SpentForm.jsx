@@ -39,8 +39,8 @@ const SpentForm = ({
                     style={styles.btnText}
                 >Cancel</Text>
             </Pressable>
-            {currentExpense.id 
-                ? (
+            {!!currentExpense.id &&
+                (
                     <Pressable
                         onLongPress={() => {
                             deleteExpense(currentExpense.id)
@@ -51,10 +51,7 @@ const SpentForm = ({
                             style={styles.btnText}
                         >Delete</Text>
                     </Pressable>
-                )
-                : (
-                    ''
-                )
+                )            
             }
         </View>
         <View style={styles.form}>

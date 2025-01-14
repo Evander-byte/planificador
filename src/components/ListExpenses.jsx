@@ -5,13 +5,23 @@ import Expense from './Expense'
 const ListExpenses = ({
     spents,
     setModal,
-    setExpense
+    setExpense,
+    filter,
+    filterExpenses
 }) => {
   return (
     <View style={styles.container}>
         <Text style={styles.title}>List of expenses</Text>
-        {spents.length === 0 
-            ? <Text style={styles.nonExpenses}>No Expenses</Text>
+        {
+            filter 
+            ? filterExpenses.map(spent => (
+                <Expense
+                    key={spent.id} 
+                    spent={spent}
+                    setModal={setModal}
+                    setExpense={setExpense}
+                />
+            ))
             : spents.map((spent) => (
                 <Expense
                     key={spent.id} 
@@ -21,13 +31,20 @@ const ListExpenses = ({
                 />
             ))
         }
+
+        {
+            spents.length === 0 || (filterExpenses.length === 0 && !!filter) && (
+                <Text style={styles.nonExpenses}>No expenses found</Text>
+            )
+        }
+
     </View>
   )
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 70,
+        marginTop: 15,
         marginBottom: 100
     },
     title: {

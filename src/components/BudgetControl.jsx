@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import globalStyles from '../styles'
 import { formatAmount } from '../helpers'
+import CircularProgress from 'react-native-circular-progress-indicator'
 
 const BudgetControl = ({
     budget,
@@ -9,19 +10,36 @@ const BudgetControl = ({
 }) => {
     const [avaible, setAvaible] = useState(0)
     const [spent, setSpent] = useState(0)
+    const [percentage, setPercentage] = useState()
 
     useEffect(() => {
         const totalSpent = spents.reduce((total, spent) => Number(spent.amount) + total, 0)
         const totalAvaible = budget - totalSpent
+
+        const newPercentage = (
+            ((budget - totalAvaible) / budget)*100
+        )
+        setTimeout(() => {
+            setPercentage(newPercentage) 
+        }, 500)
         setSpent(totalSpent) 
         setAvaible(totalAvaible)
     },[spents])
   return (
     <View style={styles.container}>
         <View style={styles.centerChart}>
-            <Image
-                style={styles.img}
-                source={require('../img/grafico.jpg')}
+            <CircularProgress 
+                value={percentage}
+                duration={2000}
+                radius={150}
+                valueSuffix={'%'}
+                title='Spent'
+                inActiveStrokeColor='#F5F5F5'
+                inActiveStrokeWidth={20}
+                activeStrokeColor='#3B82F6'
+                activeStrokeWidth={20}
+                titleStyle={{fontWeight: 'bold', 'fontSize': 20}}
+                titleColor='#64748B'
             />
         </View>
         <View style={styles.textContainer}>

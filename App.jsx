@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
   Alert,
@@ -24,6 +24,7 @@ import NewBudget from './src/components/NewBudget'
 import SpentForm from './src/components/SpentForm'
 import { idGenrator } from './src/helpers'
 import ListExpenses from './src/components/ListExpenses'
+import Filter from './src/components/Filter'
 
 
 
@@ -34,6 +35,8 @@ function App() {
   const [spents, setSpents] = useState([])
   const [modal, setModal] = useState(false)
   const [expense, setExpense] = useState({})
+  const [filter, setFilter] = useState('')
+  const [filterExpenses, setFilterExpenses] = useState([])
 
   const handleBudget = (budget) => {
     if(Number(budget) > 0){
@@ -100,11 +103,21 @@ function App() {
         </View>
 
         {isValidBudget && (
-          <ListExpenses
-          spents={spents}
-          setModal={setModal}
-          setExpense={setExpense}
-          />
+          <>
+            <Filter
+              filter={filter}
+              spents={spents}
+              setFilter={setFilter}
+              setFilterExpenses={setFilterExpenses}
+            />
+            <ListExpenses
+              spents={spents}
+              setModal={setModal}
+              setExpense={setExpense}
+              filter={filter}
+              filterExpenses={filterExpenses}
+            />
+          </>
         )}
       </ScrollView>
 
